@@ -1,4 +1,5 @@
 import Product from "../model/product.model.js";
+import mongoose from "mongoose";
 
 export const getProducts = async (req, res) => {
     try {
@@ -17,19 +18,22 @@ export const createProduct = async (req, res) => {
     const product = new Product(body);
     try {
         await product.save();
-        res.status(200).send(product);
+        res.status(200).json({success: true, data: product});
     } catch (error){
-        res.status(400).send(error);
+        res.status(500).json({success: false, error: error.message});
     }
 }
 
 export const deleteProduct = async (req, res) => {
     const id = req.params.id;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({success:false, message: 'Invalid ID'});
+    }
     try {
         await Product.deleteOne({_id: id});
-        res.status(200).send({error: 'Product deleted successfully'});
+        res.status(200).json({success: true, message: 'Product deleted successfully'});
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({success:false, message: error.message});
     }
 }
 
