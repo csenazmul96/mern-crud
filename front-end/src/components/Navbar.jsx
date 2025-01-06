@@ -5,7 +5,7 @@ import {
     DrawerBackdrop,
     DrawerContent,
     DrawerRoot,
-    HStack, Button
+    HStack, Button, Icon
 } from '@chakra-ui/react'
 
 import {
@@ -20,15 +20,18 @@ import {CloseButton} from "@/components/ui/close-button.jsx";
 import {ColorModeButton, useColorModeValue} from "@/components/ui/color-mode.jsx";
 import React, { useState } from "react"
 import {IoMdMenu} from "react-icons/io";
+import {Md3dRotation} from "react-icons/md";
+import {Link} from "react-router-dom";
 
 
 
 const LinkItems = [
-    { name: 'Home', icon: FiHome },
-    { name: 'Trending', icon: FiTrendingUp },
-    { name: 'Explore', icon: FiCompass },
-    { name: 'Favourites', icon: FiStar },
-    { name: 'Settings', icon: FiSettings },
+    { name: 'Home', icon: FiHome, url:'/' },
+    { name: 'Create', icon: FiTrendingUp, url:'/create' },
+    { name: 'Trending', icon: FiTrendingUp, url:'/' },
+    { name: 'Explore', icon: FiCompass, url:'/' },
+    { name: 'Favourites', icon: FiStar, url:'/' },
+    { name: 'Settings', icon: FiSettings, url:'/' },
 ]
 
 const SidebarContent = ({ onClose, ...rest }) => {
@@ -50,7 +53,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
             </Flex>
 
             {LinkItems.map((link, i) => (
-                <NavItem key={link.name} icon={link.icon}>
+                <NavItem key={link.name} icon={link.icon} url={link.url}>
                     {link.name}
                 </NavItem>
             ))}
@@ -58,7 +61,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
     )
 }
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, url, children, ...rest }) => {
     return (
         <Box
             as="a"
@@ -77,8 +80,9 @@ const NavItem = ({ icon, children, ...rest }) => {
                     color: 'white',
                 }}
                 {...rest}>
-
-                {children}
+                <Link to={url} >
+                    {children}
+                </Link>
             </Flex>
         </Box>
     )
