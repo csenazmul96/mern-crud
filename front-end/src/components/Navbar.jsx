@@ -65,7 +65,7 @@ const NavItem = ({ icon, url, children, ...rest }) => {
     return (
         <Box
             as="a"
-            href="#"
+            href={url}
             style={{ textDecoration: 'none' }}
             _focus={{ boxShadow: 'none' }}>
             <Flex
@@ -80,9 +80,7 @@ const NavItem = ({ icon, url, children, ...rest }) => {
                     color: 'white',
                 }}
                 {...rest}>
-                <Link to={url} >
-                    {children}
-                </Link>
+                {children}
             </Flex>
         </Box>
     )

@@ -1,4 +1,4 @@
-import {Input, Stack} from "@chakra-ui/react";
+import {Button, Input, Stack} from "@chakra-ui/react";
 import { Field } from "@/components/ui/field"
 
 const ProductForm = () => {
@@ -10,6 +10,10 @@ const ProductForm = () => {
             <Field label="Price">
                 <Input placeholder="Price" type="number"  />
             </Field>
+            <Field label="Image">
+                <Input placeholder="Image" type="file"  />
+            </Field>
+            <Button>Click me</Button>
         </Stack>
     )
 }
