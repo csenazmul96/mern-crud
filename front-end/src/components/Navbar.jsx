@@ -2,17 +2,10 @@ import {
     Box,
     Flex,
     Text,
-    useDisclosure,
-    DrawerActionTrigger,
     DrawerBackdrop,
-    DrawerBody,
-    DrawerCloseTrigger,
     DrawerContent,
-    DrawerFooter,
-    DrawerHeader,
     DrawerRoot,
-    DrawerTitle,
-    DrawerTrigger
+    HStack, Button
 } from '@chakra-ui/react'
 
 import {
@@ -20,14 +13,14 @@ import {
     FiTrendingUp,
     FiCompass,
     FiStar,
-    FiSettings,
+    FiSettings
 } from 'react-icons/fi'
 
-
 import {CloseButton} from "@/components/ui/close-button.jsx";
-import {useColorModeValue} from "@/components/ui/color-mode.jsx";
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import {ColorModeButton, useColorModeValue} from "@/components/ui/color-mode.jsx";
+import React, { useState } from "react"
+import {IoMdMenu} from "react-icons/io";
+
 
 
 const LinkItems = [
@@ -39,7 +32,6 @@ const LinkItems = [
 ]
 
 const SidebarContent = ({ onClose, ...rest }) => {
-    const [open, setOpen] = useState(false)
     return (
         <Box
             transition="3s ease"
@@ -52,55 +44,91 @@ const SidebarContent = ({ onClose, ...rest }) => {
             {...rest}>
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    Logo
+                    Logo1
                 </Text>
-                <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
-
+                <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose}  />
             </Flex>
 
+            {LinkItems.map((link, i) => (
+                <NavItem key={link.name} icon={link.icon}>
+                    {link.name}
+                </NavItem>
+            ))}
         </Box>
     )
 }
 
+const NavItem = ({ icon, children, ...rest }) => {
+    return (
+        <Box
+            as="a"
+            href="#"
+            style={{ textDecoration: 'none' }}
+            _focus={{ boxShadow: 'none' }}>
+            <Flex
+                align="center"
+                p="4"
+                mx="4"
+                borderRadius="lg"
+                role="group"
+                cursor="pointer"
+                _hover={{
+                    bg: 'cyan.400',
+                    color: 'white',
+                }}
+                {...rest}>
 
+                {children}
+            </Flex>
+        </Box>
+    )
+}
+
+const MobileNav = ({ onOpen, open, ...rest }) => {
+    return (
+        <Flex
+            ml={{ base: 0, md: 60 }}
+            px={{ base: 4, md: 4 }}
+            height="20"
+            alignItems="center"
+            bg={useColorModeValue('white', 'gray.900')}
+            borderBottomWidth="1px"
+            borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
+            justifyContent={{ base: 'space-between', md: 'flex-end' }}
+            {...rest}>
+            <Button variant="plain" onClick={()=>onOpen(!open)}>
+                <IoMdMenu />
+            </Button>
+
+            <Text
+                display={{ base: 'flex', md: 'none' }}
+                fontSize="2xl"
+                fontFamily="monospace"
+                fontWeight="bold">
+                Mobile2
+            </Text>
+
+            <HStack spacing={{ base: '0', md: '6' }}>
+                <ColorModeButton  variant="subtle"/>
+            </HStack>
+        </Flex>
+    )
+}
 
 const SidebarWithHeader = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [open, setOpen] = useState(false)
 
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
-            <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
-            <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
+        <>
+            <SidebarContent onClose={() => setOpen} display={{ base: 'none', md: 'block' }} />
+            <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)} placement={'start'}  size={'sm'}>
                 <DrawerBackdrop />
-                <DrawerTrigger asChild>
-                    <Button variant="outline" size="sm">
-                        Open Drawer
-                    </Button>
-                </DrawerTrigger>
                 <DrawerContent>
-                    <DrawerHeader>
-                        <DrawerTitle>Drawer Title</DrawerTitle>
-                    </DrawerHeader>
-                    <DrawerBody>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-                    </DrawerBody>
-                    <DrawerFooter>
-                        <DrawerActionTrigger asChild>
-                            <Button variant="outline">Cancel</Button>
-                        </DrawerActionTrigger>
-                        <Button>Save</Button>
-                    </DrawerFooter>
-                    <DrawerCloseTrigger />
+                    <SidebarContent onClose={()=>setOpen(!open)} />
                 </DrawerContent>
             </DrawerRoot>
-
-            <Box ml={{ base: 0, md: 60 }} p="4">
-                {/* Content */}
-            </Box>
-        </Box>
+            <MobileNav onOpen={setOpen} open={open}   />
+        </>
     )
 }
 
