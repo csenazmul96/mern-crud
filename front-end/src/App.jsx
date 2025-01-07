@@ -4,6 +4,7 @@ import HomePage from "@/pages/HomePage";
 import CreateProduct from "@/pages/CreateProduct.jsx";
 import SidebarWithHeader from "@/components/Navbar.jsx";
 import {useColorModeValue} from "@/components/ui/color-mode.jsx";
+import {ToastContainer} from "react-toastify";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
                     </Routes>
                 </Box>
             </Box>
+            <ToastContainer />
         </>
     )
 }

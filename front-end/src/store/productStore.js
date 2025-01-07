@@ -15,9 +15,15 @@ export const useProductStore = create((set) =>({
             body: JSON.stringify(newProduct)
         })
 
-        const data = await res.json()
-        set((state) => ({products:[...state.products, data.data]}))
-        return {success: true, message: "Please has been created."};
+        if (res.status === 200) {
+            const data = await res.json()
+            set((state) => ({products:[...state.products, data.data]}))
+            return {success: true, message: "Please has been created."};
+        } else {
+            return {success: false, message: "Something went wrong."};
+        }
+
+
     },
 
 }))

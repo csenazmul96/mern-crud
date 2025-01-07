@@ -15,14 +15,22 @@ const ProductForm = () => {
 
     const handleClick = async () => {
      const {message, success}   = await createProduct(form)
+
         if(success){
-            toast.success(message)
+            toast.success(message, {
+                position: 'top-right',
+                duration: 3000,
+            });
+            setForm({name: "", price: "", image: ""})
         } else {
-            toast.error(message)
+            toast.error(message, {
+                position: 'top-right',
+                duration: 3000,
+            });
         }
     }
     return (
-        <Stack gap="5" maxW="full" css={{ "--field-label-width": "96px" }} >
+        <Stack>
             <Field label="Product Name" invalid errorText="This is an error text">
                 <Input
                     placeholder="Name"
