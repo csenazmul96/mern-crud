@@ -39,6 +39,18 @@ export const useProductStore = create((set) =>({
         } else {
             return {success: false, message: "Something went wrong."};
         }
-    }
+    },
+    deleteProducts: async(id) => {
+        const res = await fetch(`/api/products/${id}`,{
+            method: 'Delete'
+        })
+
+        if(res.status === 200) {
+            set((state) => ({products:state.products.filter((item)=>item._id !== id)}))
+            return {success: true, message: "Product deleted successfully."};
+        } else {
+            return {success: false, message: "Something went wrong."};
+        }
+    },
 
 }))
