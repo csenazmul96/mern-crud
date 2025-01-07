@@ -25,5 +25,20 @@ export const useProductStore = create((set) =>({
 
 
     },
+    getProducts: async() => {
+        const res = await fetch(`/api/products`,{
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if(res.status === 200) {
+            const data = await res.json()
+            set({products:data.data})
+        } else {
+            return {success: false, message: "Something went wrong."};
+        }
+    }
 
 }))
