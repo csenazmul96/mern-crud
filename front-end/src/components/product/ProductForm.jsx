@@ -1,11 +1,10 @@
 import {Button, Input, Stack} from "@chakra-ui/react";
 import { Field } from "@/components/ui/field"
 import {useState} from "react";
-import createProduct from "@/pages/CreateProduct.jsx";
 import {useProductStore} from "@/store/productStore.js";
 import {toast} from "react-toastify";
 
-const ProductForm = () => {
+const ProductForm = ({product}) => {
     const [form, setForm] = useState({
         name: "",
         price: "",

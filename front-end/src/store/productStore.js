@@ -52,5 +52,21 @@ export const useProductStore = create((set) =>({
             return {success: false, message: "Something went wrong."};
         }
     },
+    getSingleProducts: async(id) => {
+        const res = await fetch(`/api/products/${id}`,{
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if(res.status === 200) {
+            const data = await res.json()
+            console.log('data')
+            return {success: true, message: "Product Found.", data: data.data};
+        } else {
+            return {success: false, message: "Something went wrong.", data: null};
+        }
+    },
 
 }))

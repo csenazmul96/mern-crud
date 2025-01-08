@@ -5,6 +5,7 @@ import CreateProduct from "@/pages/CreateProduct.jsx";
 import SidebarWithHeader from "@/components/Navbar.jsx";
 import {useColorModeValue} from "@/components/ui/color-mode.jsx";
 import {ToastContainer} from "react-toastify";
+import EditProduct from "@/pages/EditProduct.jsx";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/create" element={<CreateProduct />} />
+                        <Route path="/edit/:id" element={<EditProduct />} />
                     </Routes>
                 </Box>
             </Box>
